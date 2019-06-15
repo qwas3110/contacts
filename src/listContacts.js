@@ -20,11 +20,16 @@ class ListContacts extends Component {
     };
 
     render() {
+
+        const { contacts, onDelectContact } = this.props;
+        const { query } = this.state;
+
+
         let showingContacts;
 
-        if (this.state.query) {
+        if (query) {
             const match = new RegExp(EscapeString(this.state.query),'i');
-            showingContacts = this.props.contacts.filter(c => match.test(c.name));
+            showingContacts = contacts.filter(c => match.test(c.name));
         } else {
             showingContacts = this.props.contacts;
         }
@@ -33,13 +38,13 @@ class ListContacts extends Component {
 
         return (
             <div className='list-contacts'>
-                {'query:' + JSON.stringify(this.state.query)}
+                {/*{'query:' + JSON.stringify(this.state.query)}*/}
                 <div className='list-contacts-top'>
                     <input
                         type="text"
                         className='search-contacts'
                         placeholder={'search contact!'}
-                        value={this.state.query}
+                        value={query}
                         onChange={(event) => this.updateQuery(event.target.value)}
                     />
                 </div>
@@ -57,7 +62,7 @@ class ListContacts extends Component {
                             </div>
                             <button
                                 className='contact-remove'
-                                onClick={() => this.props.onDelectContact(contact)}
+                                onClick={() => onDelectContact(contact)}
                             >
                                 remove
                             </button>
